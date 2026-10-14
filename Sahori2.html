@@ -1,0 +1,564 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sahori - Mi Princesita</title>
+<style>
+:root {
+  --pink-main: #e88ab1;
+  --pink-light: #fdf0f5;
+  --pink-soft: #f7cedc;
+  --blue-main: #73a9c2;
+  --blue-light: #eff6fa;
+  --blue-soft: #b2d5e5;
+  --ink: #4f3b47;
+  --ink-light: #7a6371;
+  --line: #f1cbd8;
+  --white: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #fff9fb 0%, #f4f8fb 100%);
+  color: var(--ink);
+  font-family: Georgia, 'Times New Roman', serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.page {
+  min-height: 100vh;
+  position: relative;
+  isolation: isolate;
+  padding: 40px 16px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page::before, .page::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: clamp(25px, 8vw, 80px);
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.85;
+  background-image: 
+    radial-gradient(circle at 50% 20px, #f4b6cc 0 4px, transparent 5px),
+    radial-gradient(circle at 20% 60px, #aed4e6 0 3px, transparent 4px),
+    radial-gradient(circle at 70% 100px, #f7d0dc 0 5px, transparent 6px),
+    radial-gradient(circle at 35% 150px, #8bbcd3 0 3px, transparent 4px);
+  background-size: 60px 180px;
+}
+
+.page::before { left: 0; }
+.page::after { right: 0; transform: scaleX(-1); }
+
+.topline, .bottomline {
+  width: min(100%, 720px);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--pink-soft), var(--blue-soft), transparent);
+}
+
+.topline { margin-bottom: 25px; }
+.bottomline { margin-top: 35px; }
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 11px;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--pink-main);
+  text-align: center;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.lotus-icon {
+  font-size: 38px;
+  line-height: 1;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, var(--pink-main), var(--blue-main));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  animation: floatLotus 4s ease-in-out infinite;
+}
+
+@keyframes floatLotus {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(3deg); }
+}
+
+h1 {
+  text-align: center;
+  font-size: clamp(32px, 7vw, 52px);
+  font-weight: normal;
+  letter-spacing: 0.5px;
+  color: #b85f7e;
+  margin-bottom: 8px;
+  font-family: Georgia, serif;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--ink-light);
+  margin-bottom: 30px;
+}
+
+.photo-container {
+  width: min(100%, 380px);
+  margin: 0 auto 35px;
+  padding: 10px;
+  background: linear-gradient(135deg, #f7ceeb, #c3e2f1);
+  border-radius: 18px;
+  box-shadow: 0 15px 35px rgba(220, 150, 180, 0.2);
+  position: relative;
+}
+
+.photo-wrapper {
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+  aspect-ratio: 4 / 5;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.photo-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.photo-container:hover img {
+  transform: scale(1.03);
+}
+
+.photo-badge {
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--pink-soft);
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 12px;
+  color: #b85f7e;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  white-space: nowrap;
+  font-family: system-ui, sans-serif;
+}
+
+.timer-card {
+  width: min(100%, 650px);
+  background: linear-gradient(135deg, rgba(253, 240, 245, 0.9), rgba(239, 246, 250, 0.9));
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 30px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(180, 120, 150, 0.06);
+}
+
+.timer-card h3 {
+  font-size: 18px;
+  color: #a85575;
+  margin-bottom: 6px;
+  font-family: Georgia, serif;
+  font-weight: normal;
+}
+
+.timer-card .startDateText {
+  font-size: 12px;
+  color: var(--ink-light);
+  margin-bottom: 18px;
+  font-family: system-ui, sans-serif;
+}
+
+.timer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.timer-box {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 12px 6px;
+  border: 1px solid rgba(220, 160, 182, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+}
+
+.timer-box .number {
+  font-size: clamp(20px, 5vw, 28px);
+  font-weight: 600;
+  color: #b85f7e;
+  font-family: system-ui, sans-serif;
+  line-height: 1.1;
+}
+
+.timer-box .label {
+  font-size: 11px;
+  color: #7a6371;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 4px;
+  font-family: system-ui, sans-serif;
+}
+
+.card {
+  width: min(100%, 650px);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: clamp(23px, 6vw, 46px);
+  box-shadow: 0 14px 45px rgba(164, 92, 119, 0.09);
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px solid #f8e5eb;
+  pointer-events: none;
+}
+
+.card h2 {
+  text-align: center;
+  font-weight: normal;
+  font-size: 25px;
+  color: #b85f7e;
+  margin-bottom: 25px;
+  font-family: Georgia, serif;
+}
+
+.letter {
+  font-size: 15.5px;
+  line-height: 2;
+  color: #644b54;
+  white-space: normal;
+  text-align: left;
+}
+
+.letter p {
+  margin-bottom: 18px;
+}
+
+.letter p:last-child {
+  margin-bottom: 0;
+}
+
+.letter strong {
+  font-weight: 600;
+  color: #b85f7e;
+}
+
+.meaning-card {
+  width: min(100%, 650px);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #e3edf3;
+  border-top: 3px solid var(--pink-main);
+  border-bottom: 3px solid var(--blue-main);
+  border-radius: 12px;
+  padding: 28px 24px;
+  box-shadow: 0 10px 30px rgba(120, 160, 180, 0.08);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.meaning-card h3 {
+  font-size: 20px;
+  color: #a85575;
+  margin-bottom: 14px;
+  font-family: Georgia, serif;
+  font-weight: normal;
+}
+
+.meaning-card p {
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: var(--ink-light);
+  margin-bottom: 12px;
+}
+
+.meaning-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.pill {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-family: system-ui, sans-serif;
+}
+
+.pill-pink {
+  background: var(--pink-light);
+  color: #b85f7e;
+  border: 1px solid var(--pink-soft);
+}
+
+.pill-blue {
+  background: var(--blue-light);
+  color: #48728a;
+  border: 1px solid var(--blue-soft);
+}
+
+.button-wrap {
+  text-align: center;
+  margin-top: 25px;
+}
+
+button {
+  padding: 12px 24px;
+  background: #fff;
+  border: 1px solid #dca0b6;
+  color: #a85575;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  letter-spacing: 0.4px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(220, 160, 182, 0.15);
+}
+
+button:hover {
+  background: #fff2f6;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(220, 160, 182, 0.25);
+}
+
+#secreto {
+  display: none;
+  margin-top: 25px;
+  padding-top: 22px;
+  border-top: 1px dashed var(--line);
+  text-align: center;
+  color: #a85575;
+  line-height: 2;
+  font-size: 15px;
+  animation: fade 0.8s ease;
+}
+
+.signature {
+  text-align: center;
+  margin-top: 28px;
+  color: #b77d91;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: system-ui, sans-serif;
+}
+
+.fall {
+  position: fixed;
+  top: -45px;
+  left: 0;
+  pointer-events: none;
+  z-index: 5;
+  animation: fall linear forwards;
+  will-change: transform;
+}
+
+@keyframes fall {
+  to {
+    transform: translate3d(var(--drift), 110vh, 0) rotate(var(--spin));
+    opacity: 0.15;
+  }
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media(max-width: 480px) {
+  .page { padding-left: 18px; padding-right: 18px; }
+  .card { padding: 25px 20px; }
+  .letter { font-size: 14.5px; line-height: 1.9; }
+  .timer-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<main class="page">
+  <div class="topline"></div>
+  <div class="eyebrow">Una historia escrita desde el corazón</div>
+  <div class="lotus-icon" aria-hidden="true">🪷</div>
+  
+  <h1>Sahori</h1>
+  <p class="subtitle">
+    Mi niña bonita · Un amor bonito a pesar de la distancia
+  </p>
+
+  <!-- Photo Section -->
+  <div class="photo-container">
+    <div class="photo-wrapper">
+      <img src="79846_2.png" alt="Sahori" onerror="this.src='https://placehold.co/400x500/fdf0f5/e88ab1?text=Sahori'">
+    </div>
+    <div class="photo-badge">❀ Siempre juntos ❀</div>
+  </div>
+
+  <div class="timer-card">
+    <h3>Llevamos juntos</h3>
+    <div class="startDateText">Desde el 18 de enero de 2026 a las 10:39 a. m.</div>
+    <div class="timer-grid">
+      <div class="timer-box">
+        <div id="dias" class="number">0</div>
+        <div class="label">Días</div>
+      </div>
+      <div class="timer-box">
+        <div id="horas" class="number">00</div>
+        <div class="label">Horas</div>
+      </div>
+      <div class="timer-box">
+        <div id="minutos" class="number">00</div>
+        <div class="label">Minutos</div>
+      </div>
+      <div class="timer-box">
+        <div id="segundos" class="number">00</div>
+        <div class="label">Segundos</div>
+      </div>
+    </div>
+  </div>
+
+  <article class="card">
+    <h2>Mi princesita sahori</h2>
+    <div class="letter">
+      <p>
+        No sé cómo iniciar pero primero que nada quería darte las gracias por estar conmigo y que sepas que te amo en verdad y que no hay un solo día en el que no me sienta feliz de tenerte en mi vida aunque estemos lejos, lo que siento por ti es algo que nace de mi.
+      </p>
+      <p>
+        Eres alguien con quien quiero seguir creando recuerdos alguien con quien quiero compartir mis risas y mis sueños.
+      </p>
+      <p>
+        Sé que una relación a distancia no siempre es fácil que hay kilómetros que nos separan y momentos en los que seguramente vamos a extrañarnos demasiado pero cuando las cosas se pongan difíciles recordemos todo lo que sentimos y hablemos las veces que sean necesarias para entendernos.
+      </p>
+      <p>
+        Igual pedirte disculpas, no porque haya hecho algo malo, si no por el hecho de a veces hacerte enojar, perdón si alguna vez hice algo que te molestó, solo dime, prometo cambiarlo para siempre verte feliz y que nunca pienses algo malo sobre mi, porque recuerda que tu felicidad es la mia, te amo muchote sé que también puedo equivocarme pero sí quiero esforzarme por hacerte feliz por aprender de mis errores por escucharte y por demostrarte con hechos.
+      </p>
+      <p>
+        Mi sueño es que algún día podamos abrazarnos por fin y sentir que cada día que esperamos valió la pena quiero vivir muchas cosas bonitas contigo y seguir conociéndote cada día un poquito más porque todavía hay muchísimas cosas que quiero descubrir de ti.
+      </p>
+      <p>
+        Gracias por llegar a mi vida, cada momento que me haces sonreír y por permitirme formar parte de la tuya si pudieras ver todo lo que siento por ti desde mi corazón entenderías por qué eres tan importante para mí y el por qué me hace tanta ilusión imaginar un futuro en el que sigamos juntos.
+      </p>
+      <p>
+        <strong>Te amo en verdad mi vida nunca olvides que detrás de esta pagina hay alguien que piensa en ti que te extraña que sueña con abrazarte y que se siente muy afortunado.</strong>
+      </p>
+      <p>
+        Que sigamos construyendo algo bonito a nuestro ritmo sin dejar de hablar sin dejar de cuidarnos y sin olvidarnos de que somos dos personitas que decidieron darse una oportunidad a pesar de la distancia.
+      </p>
+      <p>
+        Si vuelves a leer esta carta quiero que recuerdes que cada palabra la escribí pensando en ti.
+      </p>
+      <p style="text-align: center; margin-top: 25px; padding-top: 15px; border-top: 1px solid var(--line);">
+        <strong>Te amo muchísimo mi vida, si pudiera elegir otra vez volvería a querer conocerte volvería a enamorarme de ti 💗🪷</strong>
+      </p>
+    </div>
+  </article>
+
+  <article class="meaning-card">
+    <h3>El Significado de la Flor de Loto 🪷</h3>
+    <p>
+      La <strong>Flor de Loto</strong> es un símbolo puro de resiliencia, amor sincero y renacimiento. Florece con serenidad y belleza sobre cualquier agua, superando los obstáculos para desplegar sus pétalos más hermosos.
+    </p>
+    <p>
+      Así como la flor de loto florece impecable, nuestro amor demuestra que no importa la distancia ni los kilómetros; el amor verdadero se cuida, crece fuerte y florece con más fuerza cada día.
+    </p>
+    <div class="meaning-pills">
+      <span class="pill pill-pink">🌸 Rosa: Dulzura y Amor Sincero</span>
+      <span class="pill pill-blue">🩵 Azul: Paz, Tranquilidad y Lealtad</span>
+      <span class="pill pill-pink">🪷 Flor de Loto: Nuestro Amor que Supera Toda Distancia</span>
+    </div>
+  </article>
+
+  <div class="signature">Hecho especialmente desde el corazón para Sahori</div>
+  <div class="bottomline"></div>
+</main>
+
+<script>
+// Live Count-Up Timer since Jan 18, 2026 at 10:39 AM
+const startDate = new Date(2026, 0, 18, 10, 39, 0); // Month is 0-indexed (0 = Jan)
+
+function actualizarContador() {
+  const ahora = new Date();
+  const diferencia = ahora - startDate;
+
+  if (diferencia < 0) {
+    document.getElementById("dias").textContent = "0";
+    document.getElementById("horas").textContent = "00";
+    document.getElementById("minutos").textContent = "00";
+    document.getElementById("segundos").textContent = "00";
+    return;
+  }
+
+  const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+  const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
+  const minutos = Math.floor((diferencia / (1000 * 60)) % 60);
+  const segundos = Math.floor((diferencia / 1000) % 60);
+
+  document.getElementById("dias").textContent = dias;
+  document.getElementById("horas").textContent = horas < 10 ? "0" + horas : horas;
+  document.getElementById("minutos").textContent = minutos < 10 ? "0" + minutos : minutos;
+  document.getElementById("segundos").textContent = segundos < 10 ? "0" + segundos : segundos;
+}
+
+setInterval(actualizarContador, 1000);
+actualizarContador();
+
+// Petal and Lotus falling animation
+function lanzarDecoracion(cantidad) {
+  const simbolos = ["🪷", "♡", "🌸", "✿"];
+  const colores = ["#e88ab1", "#f7cedc", "#73a9c2", "#b2d5e5", "#d66b91"];
+  
+  for (let i = 0; i < cantidad; i++) {
+    setTimeout(() => {
+      const item = document.createElement("span");
+      item.className = "fall";
+      item.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
+      item.style.left = Math.random() * 100 + "vw";
+      item.style.fontSize = (14 + Math.random() * 16) + "px";
+      item.style.color = colores[Math.floor(Math.random() * colores.length)];
+      item.style.setProperty("--drift", (Math.random() * 160 - 80) + "px");
+      item.style.setProperty("--spin", (Math.random() * 500 - 250) + "deg");
+      item.style.animationDuration = (5 + Math.random() * 5) + "s";
+      document.body.appendChild(item);
+      setTimeout(() => item.remove(), 10500);
+    }, i * 120);
+  }
+}
+
+// Gentle continuous background falling petals
+let decorTimer = setInterval(() => lanzarDecoracion(2), 2000);
+setTimeout(() => clearInterval(decorTimer), 20000);
+</script>
+</body>
+</html>
+```
